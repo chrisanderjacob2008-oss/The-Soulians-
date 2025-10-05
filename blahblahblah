@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Storybook</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: "Poppins", sans-serif;
+      text-align: center;
+      background-color: #fef6e4;
+      transition: background 0.5s;
+    }
+
+    .page {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      padding: 60px 20px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity 0.6s;
+    }
+
+    .active {
+      display: block;
+      opacity: 1;
+    }
+
+    img {
+      max-width: 60%;
+      border-radius: 16px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+
+    h1 {
+      color: #001858;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #172c66;
+      max-width: 600px;
+      margin: 20px auto;
+    }
+
+    .nav {
+      position: fixed;
+      bottom: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 40px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #f582ae;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #f25f4c;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Story Pages -->
+  <div class="page active" id="page1">
+    <h1>Page 1: The Beginning</h1>
+    <img src="https://picsum.photos/id/1018/600/400" alt="Forest">
+    <p>Once upon a time, in a quiet forest, a little fox set out on an adventure.</p>
+  </div>
+
+  <div class="page" id="page2">
+    <h1>Page 2: The Journey</h1>
+    <img src="https://picsum.photos/id/1025/600/400" alt="Mountain">
+    <p>The fox climbed over tall mountains and crossed rivers under the stars.</p>
+  </div>
+
+  <div class="page" id="page3">
+    <h1>Page 3: The Discovery</h1>
+    <img src="https://picsum.photos/id/1041/600/400" alt="Treasure">
+    <p>At last, the fox found a glowing crystal that lit up the entire valley.</p>
+  </div>
+
+  <!-- Navigation Buttons -->
+  <div class="nav">
+    <button id="prev">⬅️ Back</button>
+    <button id="next">Next ➡️</button>
+  </div>
+
+  <script>
+    const pages = document.querySelectorAll(".page");
+    let current = 0;
+
+    const showPage = (index) => {
+      pages.forEach((page, i) => {
+        page.classList.remove("active");
+        if (i === index) page.classList.add("active");
+      });
+    };
+
+    document.getElementById("next").addEventListener("click", () => {
+      current = (current + 1) % pages.length;
+      showPage(current);
+    });
+
+    document.getElementById("prev").addEventListener("click", () => {
+      current = (current - 1 + pages.length) % pages.length;
+      showPage(current);
+    });
+
+    // Optional: allow keyboard arrow navigation
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowRight") {
+        current = (current + 1) % pages.length;
+        showPage(current);
+      } else if (e.key === "ArrowLeft") {
+        current = (current - 1 + pages.length) % pages.length;
+        showPage(current);
+      }
+    });
+  </script>
+</body>
+</html>
